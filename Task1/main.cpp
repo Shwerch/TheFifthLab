@@ -37,7 +37,7 @@ RemoveProduct remove(int productID, int count, int zone, int rack, int section, 
 			return RemoveProduct::CELL_IS_OCCUPIED_BY_ANOTHER_PRODUCT;
 		element.second.second -= count;
 		if (element.second.second <= 0) {
-			storage.erase(array);
+			storage.erase(element.first);
 			return RemoveProduct::COMPLETE_REMOVAL_PRODUCT_SUCCESS;
 		}
 		return RemoveProduct::REMOVAL_PRODUCT_SUCCESS;
