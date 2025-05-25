@@ -12,7 +12,6 @@ void process_command(const std::string &command_line, std::vector<Student> &stud
 	std::string command_type;
 	ss >> command_type;
 
-	std::cout << command_type << std::endl;
 	if (command_type == "NEW_STUDENTS") {
 		int count;
 		ss >> count;
