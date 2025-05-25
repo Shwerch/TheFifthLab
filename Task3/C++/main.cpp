@@ -1,11 +1,8 @@
 #include "library.h"
-#include <fstream> // Для работы с файлами
 
 int main() {
-	std::vector<Tram> trams; // Для варианта 2 (трамваи)
+	std::vector<Tram> trams;
 
-	// Открываем файл для чтения. Предполагаем, что файл называется "input.txt"
-	// и находится в той же директории, что и исполняемый файл.
 	std::ifstream inputFile("data.conf");
 
 	// Проверяем, удалось ли открыть файл

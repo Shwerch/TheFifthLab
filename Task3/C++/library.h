@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <sstream>
@@ -27,11 +28,9 @@ enum class Type {
 	TRLS
 };
 
-// Структура для трамвая (для варианта 2)
 struct Tram {
 	std::string name;
 	std::vector<std::string> stops;
 };
 
-// Функция для обработки команд (для варианта 2)
 void processCommand(const std::string &command, const std::string &args, std::vector<Tram> &trams);
