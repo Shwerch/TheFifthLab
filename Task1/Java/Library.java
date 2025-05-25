@@ -1,4 +1,3 @@
-// Library.java
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +5,6 @@ import java.util.Scanner;
 
 public class Library {
 
-	// Global warehouse structure
 	private static Map<
 		Character,
 		ArrayList<ArrayList<ArrayList<Cell>>>
@@ -14,7 +12,6 @@ public class Library {
 
 	public static void initializeWarehouse() {
 		warehouse = new HashMap<>();
-		// Initialize only zone 'A'
 		char zoneChar = 'A';
 		ArrayList<ArrayList<ArrayList<Cell>>> racks = new ArrayList<>();
 		for (int i = 0; i < 10; i++) { // 10 racks
@@ -33,32 +30,29 @@ public class Library {
 
 	private static Cell getCellFromAddress(String address) {
 		if (address.length() < 4) {
-			return null; // Invalid address format
+			return null; // Формат адреса неверен
 		}
 
 		char zoneChar = address.charAt(0);
-		// Only allow 'A' zone
 		if (zoneChar != 'A') {
-			return null; // Invalid zone
+			return null; // Неправильная зона
 		}
 
 		try {
-			// Extract rack, section, and shelf numbers from the address string
-			// This part requires careful parsing as rack number can be 1 or 2 digits
 			int rackNum;
 			int sectionNum;
 			int shelfNum;
 
-			if (address.length() == 4) { // e.g., A173
+			if (address.length() == 4) {
 				rackNum = Character.getNumericValue(address.charAt(1));
 				sectionNum = Character.getNumericValue(address.charAt(2));
 				shelfNum = Character.getNumericValue(address.charAt(3));
-			} else if (address.length() == 5) { // e.g., A1039
+			} else if (address.length() == 5) {
 				rackNum = Integer.parseInt(address.substring(1, 3));
 				sectionNum = Character.getNumericValue(address.charAt(3));
 				shelfNum = Character.getNumericValue(address.charAt(4));
 			} else {
-				return null; // Address too long or short
+				return null; // Адрес неверен
 			}
 
 			if (
@@ -69,17 +63,16 @@ public class Library {
 				shelfNum < 1 ||
 				shelfNum > 4
 			) {
-				return null; // Out of bounds
+				return null; // Проверка на допустимость
 			}
 
-			// Adjust to 0-based indexing
 			return warehouse
 				.get(zoneChar)
 				.get(rackNum - 1)
 				.get(sectionNum - 1)
 				.get(shelfNum - 1);
 		} catch (NumberFormatException | IndexOutOfBoundsException e) {
-			return null; // Conversion or indexing error
+			return null; // Ошибка конвертации
 		}
 	}
 
@@ -207,12 +200,11 @@ public class Library {
 		int totalCapacity = 0;
 		int totalOccupied = 0;
 
-		char zoneChar = 'A'; // Only process zone 'A'
+		char zoneChar = 'A';
 
 		int zoneCapacity = 0;
 		int zoneOccupied = 0;
 
-		// Calculate total and zone capacities and occupied quantities
 		ArrayList<ArrayList<ArrayList<Cell>>> racks = warehouse.get(zoneChar);
 		if (racks != null) {
 			for (ArrayList<ArrayList<Cell>> rack : racks) {
@@ -229,14 +221,12 @@ public class Library {
 			}
 		}
 
-		// Overall warehouse loading percentage
 		double warehouseLoadPercent = (totalCapacity == 0)
 			? 0
 			: ((double) totalOccupied / totalCapacity) * 100;
 		System.out.println("\n--- Warehouse Information ---");
 		System.out.printf("Warehouse Loading: %.2f%%\n", warehouseLoadPercent);
 
-		// Zone loading percentage for 'A'
 		double zoneLoadPercent = (zoneCapacity == 0)
 			? 0
 			: ((double) zoneOccupied / zoneCapacity) * 100;
@@ -287,7 +277,7 @@ public class Library {
 		System.out.println("Zone " + zoneChar + ":");
 		if (racks != null) {
 			for (int rackIdx = 0; rackIdx < 10; ++rackIdx) {
-				for (int shelfIdx = 0; shelfIdx < 4; ++shelfIdx) { // Iterate shelves for row output
+				for (int shelfIdx = 0; shelfIdx < 4; ++shelfIdx) { // Цикл по полкам
 					for (int sectionIdx = 0; sectionIdx < 7; ++sectionIdx) {
 						Cell cell = warehouse
 							.get(zoneChar)
@@ -305,7 +295,7 @@ public class Library {
 								)
 							);
 						} else {
-							System.out.printf("%-8s", ""); // Print empty space if cell is not empty
+							System.out.printf("%-8s", ""); // Вывести пустоту если не найдено
 						}
 					}
 					System.out.println();

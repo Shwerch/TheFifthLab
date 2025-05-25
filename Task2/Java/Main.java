@@ -6,7 +6,7 @@ public class Main {
 
         System.out.println(">>> Введите кол-во окон");
         int numWindows = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine();
 
         QueueManager queueManager = new QueueManager(numWindows);
         String line;
@@ -28,10 +28,6 @@ public class Main {
             } else if (line.equals("DISTRIBUTE")) {
                 queueManager.distributeQueue();
                 break;
-            } else {
-                // For this problem, we assume input is always ENQUEUE or DISTRIBUTE
-                // You might add error handling or an exit condition here in a real application.
-            }
         }
 
         scanner.close();
