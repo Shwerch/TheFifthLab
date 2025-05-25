@@ -1,18 +1,24 @@
 #pragma once
 
-#include <array>
+#include <iomanip>
 #include <iostream>
 #include <map>
-#include <set>
 #include <string>
+#include <vector>
 
-#define ZONEZ 1
-#define RACKS 10
-#define SECTIONS 7
-#define SHELFS 4
+struct Cell {
+	std::string item_name;
+	int quantity;
+	int max_capacity = 10;
+	bool is_empty() const { return quantity == 0; }
+};
 
-#define LIMIT(min, value, max) (((value) >= (min)) && ((value) <= (max)))
+extern std::map<char, std::vector<std::vector<std::vector<Cell>>>> warehouse;
 
-enum class AddProduct { INCORRECT_INPUT_DATA, CELL_IS_OCCUPIED_BY_ANOTHER_PRODUCT, NOT_ENOUGH_SPACE_IN_THE_CELL, ADDED_EXISTED_PROSUCT_SUCCESS, ADDED_NEW_PROSUCT_SUCCESS };
-
-enum class RemoveProduct { INCORRECT_INPUT_DATA, CELL_IS_OCCUPIED_BY_ANOTHER_PRODUCT, COMPLETE_REMOVAL_PRODUCT_SUCCESS, REMOVAL_PRODUCT_SUCCESS, NOT_FOUND_PRODUCT };
+void initialize_warehouse();
+void process_command(const std::string &command_line);
+void add_item(const std::string &item_name, int quantity, const std::string &address);
+void remove_item(const std::string &item_name, int quantity, const std::string &address);
+void display_info();
+Cell *get_cell_from_address(const std::string &address);
+std::string get_address_from_indices(char zone_char, int rack_idx, int section_idx, int shelf_idx);
