@@ -5,10 +5,9 @@ int main() {
 
 	std::ifstream inputFile("data.conf");
 
-	// Проверяем, удалось ли открыть файл
 	if (!inputFile.is_open()) {
 		std::cerr << "Не удалось открыть файл" << std::endl;
-		return 1; // Возвращаем код ошибки
+		return 1;
 	}
 
 	std::string line;

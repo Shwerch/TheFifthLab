@@ -4,9 +4,9 @@ int main() {
 	int num_windows;
 	std::cout << ">>> Введите кол-во окон" << std::endl;
 	std::cin >> num_windows;
-	std::cin.ignore(); // Consume the newline character
+	std::cin.ignore();
 
-	initialize_queue_manager(num_windows); // Initialize global variables
+	initialize_queue_manager(num_windows);
 
 	std::string line;
 
@@ -25,10 +25,7 @@ int main() {
 		} else if (line == "DISTRIBUTE") {
 			distribute_queue_to_windows();
 			break;
-		} else {
-			// For this problem, we assume input is always ENQUEUE or DISTRIBUTE
 		}
-	}
 
-	return 0;
-}
+		return 0;
+	}
