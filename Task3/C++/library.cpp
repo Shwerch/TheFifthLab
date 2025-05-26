@@ -1,11 +1,17 @@
 #include "library.h"
 
-void processCommand(const std::string &command, const std::string &args, std::vector<Tram> &trams) {
-	if (command == "CREATE_TRAM") {
+void processCommand(const Type command, const std::string &args, std::vector<Tram> &trams) {
+	if (command == Type::CREATE_TRAM) {
 		std::stringstream ss(args);
 		std::string tramName;
 		int numStops;
 		ss >> tramName >> numStops;
+		if (numStops < 2)
+			return;
+		for (Tram tram : trams) {
+			if (tram.name == tramName)
+				return;
+		}
 		Tram newTram;
 		newTram.name = tramName;
 		for (int i = 0; i < numStops; ++i) {
@@ -13,8 +19,13 @@ void processCommand(const std::string &command, const std::string &args, std::ve
 			ss >> stop;
 			newTram.stops.push_back(stop);
 		}
+		if (newTram.stops.size() == 2) {
+			if (newTram.stops.at(0) == newTram.stops.at(1))
+				return;
+		}
 		trams.push_back(newTram);
-	} else if (command == "TRAMS_IN_STOP") {
+
+	} else if (command == Type::TRAMS_IN_STOP) {
 		std::string stopName = args;
 		std::vector<std::string> tramsInThisStop;
 		for (const auto &tram : trams) {
@@ -32,7 +43,8 @@ void processCommand(const std::string &command, const std::string &args, std::ve
 				std::cout << tramName << std::endl;
 			}
 		}
-	} else if (command == "STOPS_IN_TRAM") {
+
+	} else if (command == Type::STOPS_IN_TRAM) {
 		std::string tramName = args;
 		bool found = false;
 		for (const auto &tram : trams) {
@@ -70,7 +82,8 @@ void processCommand(const std::string &command, const std::string &args, std::ve
 		if (!found) {
 			std::cout << "Trams is absent" << std::endl;
 		}
-	} else if (command == "TRAMS") {
+
+	} else if (command == Type::TRAMS) {
 		if (trams.empty()) {
 			std::cout << "Trams is absent" << std::endl;
 		} else {

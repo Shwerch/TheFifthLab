@@ -7,7 +7,7 @@ int main() {
 
 	// Проверяем, удалось ли открыть файл
 	if (!inputFile.is_open()) {
-		std::cerr << "Не удалось открыть файл input.txt" << std::endl;
+		std::cerr << "Не удалось открыть файл" << std::endl;
 		return 1; // Возвращаем код ошибки
 	}
 
@@ -23,7 +23,16 @@ int main() {
 			args = args.substr(1);
 		}
 
-		processCommand(command, args, trams);
+		Type enumCommand;
+		if (command == "CREATE_TRAM")
+			enumCommand = Type::CREATE_TRAM;
+		else if (command == "TRAMS_IN_STOP")
+			enumCommand = Type::TRAMS_IN_STOP;
+		else if (command == "STOPS_IN_TRAM")
+			enumCommand = Type::STOPS_IN_TRAM;
+		else if (command == "TRAMS")
+			enumCommand = Type::TRAMS;
+		processCommand(enumCommand, args, trams);
 	}
 
 	inputFile.close(); // Закрываем файл после использования

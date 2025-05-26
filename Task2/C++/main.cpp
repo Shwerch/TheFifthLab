@@ -2,11 +2,12 @@
 
 int main() {
 	int num_windows;
-	std::cout << ">>> Введите кол-во окон" << std::endl << ">>> ";
+	std::cout << ">>> Введите кол-во окон" << std::endl;
 	std::cin >> num_windows;
-	std::cin.ignore();
+	std::cin.ignore(); // Consume the newline character
 
-	QueueManager q_manager(num_windows);
+	initialize_queue_manager(num_windows); // Initialize global variables
+
 	std::string line;
 
 	while (true) {
@@ -19,11 +20,13 @@ int main() {
 				int duration = std::stoi(line.substr(space_pos + 1));
 				if (duration < 1)
 					continue;
-				std::cout << ">>> " << q_manager.enqueue(duration) << std::endl;
+				std::cout << ">>> " << enqueue_patient(duration) << std::endl;
 			}
 		} else if (line == "DISTRIBUTE") {
-			q_manager.distribute_queue();
+			distribute_queue_to_windows();
 			break;
+		} else {
+			// For this problem, we assume input is always ENQUEUE or DISTRIBUTE
 		}
 	}
 
